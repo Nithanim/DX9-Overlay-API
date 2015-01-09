@@ -65,24 +65,10 @@ void CBox::Draw(IDirect3DDevice9 *pDevice)
 
 	pDevice->GetViewport(&view);
 
-	float fFactor[] = 
-	{	
-		(float)m_iX/(float)800, 
-		(float)m_iY/(float)600, 
-		(float)m_dwBoxWidth/(float)800, 
-		(float)m_dwBoxHeight/(float)600
-	};
-
-	int iX = (int)(view.Width * fFactor[0]);
-	int iY = (int)(view.Height * fFactor[1]);
-	int iBoxWidth = (int)(view.Width * fFactor[2]);
-	int iBoxHeight = (int)(view.Height * fFactor[3]);
-
-	Drawing::DrawBox(iX, iY, iBoxWidth, iBoxHeight, m_dwBoxColor, pDevice);
-
+	Drawing::DrawBox(m_iX, m_iY, m_dwBoxWidth, m_dwBoxHeight, m_dwBoxColor, pDevice);
 
 	if(m_bBorderShown)
-		Drawing::DrawRectangular(iX, iY, iBoxWidth, iBoxHeight, m_dwBorderWidth, m_dwBorderColor, pDevice);
+		Drawing::DrawRectangular(m_iX, m_iY, m_dwBoxWidth, m_dwBoxHeight, m_dwBorderWidth, m_dwBorderColor, pDevice);
 }
 
 void CBox::Reset(IDirect3DDevice9 *pDevice)

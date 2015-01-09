@@ -62,19 +62,18 @@ void CText::Draw(IDirect3DDevice9 *pDevice)
 	D3DVIEWPORT9 view;
 	pDevice->GetViewport(&view);
 
-	float fFactor[3] = { (float)m_X/(float)800, (float)m_Y/(float)600, (float)m_FontSize / (float)600};
 
 	if(m_bShadow)
 	{
 		const float shadowOffset = 1.0f;
 
-		Drawing::DrawFont(&m_D3DFont, view.Width * fFactor[0] - shadowOffset, view.Height * fFactor[1], D3DCOLOR_ARGB(255, 0, 0, 0), m_Text.c_str());
-		Drawing::DrawFont(&m_D3DFont, view.Width * fFactor[0] + shadowOffset, view.Height * fFactor[1], D3DCOLOR_ARGB(255, 0, 0, 0), m_Text.c_str());
-		Drawing::DrawFont(&m_D3DFont, view.Width * fFactor[0], view.Height * fFactor[1] - shadowOffset, D3DCOLOR_ARGB(255, 0, 0, 0), m_Text.c_str());
-		Drawing::DrawFont(&m_D3DFont, view.Width * fFactor[0], view.Height * fFactor[1] + shadowOffset, D3DCOLOR_ARGB(255, 0, 0, 0), m_Text.c_str());
+		Drawing::DrawFont(&m_D3DFont, m_X - shadowOffset, m_Y, D3DCOLOR_ARGB(255, 0, 0, 0), m_Text.c_str());
+		Drawing::DrawFont(&m_D3DFont, m_X + shadowOffset, m_Y, D3DCOLOR_ARGB(255, 0, 0, 0), m_Text.c_str());
+		Drawing::DrawFont(&m_D3DFont, m_X, m_Y - shadowOffset, D3DCOLOR_ARGB(255, 0, 0, 0), m_Text.c_str());
+		Drawing::DrawFont(&m_D3DFont, m_X, m_Y + shadowOffset, D3DCOLOR_ARGB(255, 0, 0, 0), m_Text.c_str());
 	}
 
-	Drawing::DrawFont(&m_D3DFont, view.Width * fFactor[0], view.Height * fFactor[1], m_Color, m_Text.c_str(), D3DFONT_COLORTABLE);
+	Drawing::DrawFont(&m_D3DFont, m_X, m_Y, m_Color, m_Text.c_str(), D3DFONT_COLORTABLE);
 }
 
 void CText::Reset(IDirect3DDevice9 *pDevice)
@@ -107,9 +106,7 @@ bool CText::LoadResource(IDirect3DDevice9 *pDevice)
 	D3DVIEWPORT9 view;
 	pDevice->GetViewport(&view);
 
-	float fFactor[3] = { (float)m_X/(float)800, (float)m_Y/(float)600, (float)m_FontSize / (float)600};
-
-	Drawing::InitFont(pDevice, m_Font.c_str(), int(view.Height * fFactor[2]), (m_bBold)?D3DFONT_BOLD:0 | (m_bItalic)?D3DFONT_ITALIC:0 | D3DFONT_FILTERED, &m_D3DFont);
+	Drawing::InitFont(pDevice, m_Font.c_str(), m_FontSize, (m_bBold) ? D3DFONT_BOLD : 0 | (m_bItalic) ? D3DFONT_ITALIC : 0 | D3DFONT_FILTERED, &m_D3DFont);
 
 	return m_D3DFont != NULL;
 }

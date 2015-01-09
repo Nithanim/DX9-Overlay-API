@@ -38,12 +38,6 @@ void CLine::Draw(IDirect3DDevice9 *pDevice)
 	D3DVIEWPORT9 view;
 	pDevice->GetViewport(&view);
 
-	float fFactor[4] = 
-	{ 
-		(float)m_X1/(float)800, (float)m_X2/(float)800,
-		(float)m_Y1/(float)600, (float)m_Y2/(float)600				
-	};
-
 	D3DXVECTOR2	LinePos[2];
 
 	m_Line->SetAntialias(TRUE);
@@ -51,10 +45,10 @@ void CLine::Draw(IDirect3DDevice9 *pDevice)
 
 	m_Line->Begin();
 
-	LinePos[0].x = (float)view.Width  * fFactor[0];
-	LinePos[0].y = (float)view.Height * fFactor[2];
-	LinePos[1].x = (float)view.Width  * fFactor[1];
-	LinePos[1].y = (float)view.Height * fFactor[3];
+	LinePos[0].x = m_X1;
+	LinePos[0].y = m_Y1;
+	LinePos[1].x = m_X2;
+	LinePos[1].y = m_Y2;
 
 	m_Line->Draw(LinePos,2,m_Color);
 	m_Line->End();	

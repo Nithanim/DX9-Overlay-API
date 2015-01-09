@@ -57,11 +57,9 @@ void CImage::Draw(IDirect3DDevice9 *pDevice)
 	D3DVIEWPORT9 view;
 	pDevice->GetViewport(&view);
 
-	float fFactor[2] = { (float)m_x/(float)800, (float)m_y/(float)600 };
-
 	if(m_pTexture && m_pSprite)
 	{
-		Drawing::DrawSprite(m_pSprite, m_pTexture, view.Width * fFactor[0], view.Height * fFactor[1], m_rotation, m_align);
+		Drawing::DrawSprite(m_pSprite, m_pTexture, m_x, m_y, m_rotation, m_align);
 	}
 }
 
